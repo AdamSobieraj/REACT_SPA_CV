@@ -82,7 +82,7 @@ export const cvPl: CvContent = {
     roles: ['AI Engineer', 'LLM / RAG / Agents (MCP)', 'Senior Java Developer', 'Python • Spring Boot'],
     // ← WYMIENIJ: wrzuć swoje zdjęcie do folderu public/ (np. public/photo.jpg)
     //   i zmień poniższą ścieżkę.
-    photo: '/photo.jpg',
+    photo: import.meta.env.BASE_URL + 'photo.jpg',
     tagline:
       'Projektuję i wdrażam produkcyjne systemy AI — RAG pipeline’y, inteligentne agenty i semantyczne wyszukiwanie — które mierzalnie skracają czas obsługi i obniżają koszty. Oparte na 9+ latach enterprise developmentu w Javie i 3+ latach w Pythonie.',
     location: 'Wrocław, Poland',

@@ -9,7 +9,7 @@ export const cvEn: CvContent = {
   profile: {
     name: 'Adam Sobieraj',
     roles: ['AI Engineer', 'LLM / RAG / Agents (MCP)', 'Senior Java Developer', 'Python • Spring Boot'],
-    photo: '/photo.jpg',
+    photo: import.meta.env.BASE_URL + 'photo.jpg',
     tagline:
       'I design and deploy production-grade AI systems — RAG pipelines, intelligent agents, and semantic search — that measurably reduce handling time and cut costs. I build on 9+ years of enterprise development in Java and 3+ years in Python.',
     location: 'Wrocław, Poland',
