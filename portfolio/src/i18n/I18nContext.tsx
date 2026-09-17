@@ -8,8 +8,8 @@ import {
   type ReactNode,
 } from 'react';
 import { ui, type Lang, type UIKey } from './ui';
-import { cvPl, type CvContent } from '../data/cv';
-import { cvEn } from '../data/cv-en';
+import { cvData } from '../data/cv-texts';
+import { resolveCv, type CvContent } from '../data/cv';
 
 interface I18nValue {
   lang: Lang;
@@ -35,7 +35,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }, [lang]);
 
   const t = useCallback((key: UIKey) => ui[key][lang], [lang]);
-  const cv = useMemo(() => (lang === 'pl' ? cvPl : cvEn), [lang]);
+  const cv = useMemo(() => resolveCv(cvData, lang), [lang]);
 
   return <I18nContext.Provider value={{ lang, setLang, t, cv }}>{children}</I18nContext.Provider>;
 }

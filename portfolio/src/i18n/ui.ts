@@ -1,6 +1,6 @@
 // ============================================================
 // Tłumaczenia UI — wszystkie teksty interfejsu (PL/EN)
-// Treść CV (doświadczenie, umiejętności…) jest w data/cv.ts + data/cv-en.ts
+// Treść CV (doświadczenie, umiejętności…) jest w data/cv-texts.ts (słowniki PL/EN)
 // ============================================================
 
 export type Lang = 'pl' | 'en';
