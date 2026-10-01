@@ -354,6 +354,34 @@ export const cvData: LocalCvContent = {
 
   projects: [
     {
+      title: 'ISO Insight — Document Analyst Copilot',
+      description: {
+        pl: 'Wieloagentowy asystent AI (read-only) do interpretacji protokołów bankowych (ISO 20022, ISO 8583) — analiza wymagań, wykrywanie luk compliance i śledzenie zmian wersji.',
+        en: 'Multi-agent, read-only AI assistant for interpreting banking protocols (ISO 20022, ISO 8583) — requirement analysis, compliance gap detection and version-change tracking.',
+      },
+      highlights: [
+        {
+          pl: 'Wieloagentowy pipeline LangGraph (13 węzłów): orkiestracja, analiza luk, ocena ryzyka, pętla refleksji/krytyka i eskalacja oparta na pewności',
+          en: 'LangGraph multi-agent pipeline (13 nodes): orchestration, gap analysis, risk assessment, reflection/critic loop and confidence-based escalation',
+        },
+        {
+          pl: 'Asynchroniczne przetwarzanie (Celery + Redis): długie analizy nie blokują i nie przerywają połączenia HTTP (odpowiedź 202 + task_id)',
+          en: 'Asynchronous processing (Celery + Redis): long analyses never block or drop the HTTP connection (202 response + task_id)',
+        },
+        {
+          pl: 'Per-ISO RAG routing: izolowane bazy wiedzy (ISO 20022 / ISO 8583) + integracje MCP (RAG, Jira, Confluence)',
+          en: 'Per-ISO RAG routing: isolated knowledge bases (ISO 20022 / ISO 8583) + MCP integrations (RAG, Jira, Confluence)',
+        },
+        {
+          pl: 'Guardrails anti-PII i prompt-injection (blokada przed enqueue), walidacja dowodów, audit log i śledzenie Langfuse',
+          en: 'PII & prompt-injection guardrails (blocked before enqueue), evidence validation, audit log and Langfuse tracing',
+        },
+      ],
+      tech: ['Python', 'FastAPI', 'LangGraph', 'Celery', 'Redis', 'MCP', 'Langfuse', 'Docker'],
+      url: 'https://github.com/AdamSobieraj/PYTHON_Document_Analyst_Copilot',
+      openSource: true,
+    },
+    {
       title: 'MCP Agent & RAG System',
       description: {
         pl: 'Produkcjowo gotowy system agenta AI implementujący Model Context Protocol (MCP) z zaawansowanymi możliwościami RAG.',
