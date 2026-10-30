@@ -64,6 +64,15 @@ export interface Project {
   tech: string[];
   url: string;
   openSource?: boolean;
+  /** Odniesienie do ProjectGroup.id — projekty z tą samą grupą tworzą jeden wspólny system */
+  groupId?: string;
+}
+
+/** Grupa projektów tworzących jeden wspólny system (np. ISO RAG) */
+export interface ProjectGroup {
+  id: string;
+  title: string;
+  description: string;
 }
 
 export interface Language {
@@ -77,6 +86,7 @@ export interface CvContent {
   skillGroups: SkillGroup[];
   education: EducationItem[];
   certifications: Certification[];
+  projectGroups: ProjectGroup[];
   projects: Project[];
   languages: Language[];
 }
@@ -135,6 +145,14 @@ export interface LocalProject {
   tech: string[];
   url: string;
   openSource?: boolean;
+  /** Odniesienie do LocalProjectGroup.id */
+  groupId?: string;
+}
+
+export interface LocalProjectGroup {
+  id: string;
+  title: L;
+  description: L;
 }
 
 export interface LocalLanguage {
@@ -148,6 +166,7 @@ export interface LocalCvContent {
   skillGroups: LocalSkillGroup[];
   education: LocalEducationItem[];
   certifications: LocalCertification[];
+  projectGroups: LocalProjectGroup[];
   projects: LocalProject[];
   languages: LocalLanguage[];
 }
@@ -197,6 +216,11 @@ export function resolveCv(data: LocalCvContent, lang: Lang): CvContent {
       issuer: c.issuer,
       year: c.year,
     })),
+    projectGroups: data.projectGroups.map((g) => ({
+      id: g.id,
+      title: p(g.title),
+      description: p(g.description),
+    })),
     projects: data.projects.map((pr) => ({
       title: pr.title,
       description: p(pr.description),
@@ -204,6 +228,7 @@ export function resolveCv(data: LocalCvContent, lang: Lang): CvContent {
       tech: pr.tech,
       url: pr.url,
       openSource: pr.openSource,
+      groupId: pr.groupId,
     })),
     languages: data.languages.map((l) => ({
       name: p(l.name),

@@ -352,34 +352,50 @@ export const cvData: LocalCvContent = {
     { name: { pl: 'Java Developer Plus Bootcamp', en: 'Java Developer Plus Bootcamp' }, issuer: 'Codemy', year: '2021' },
   ],
 
+  // Grupy projektów — projekty z tym samym groupId tworzą jeden wspólny system
+  projectGroups: [
+    {
+      id: 'iso-rag',
+      title: {
+        pl: 'ISO RAG — jeden system, cztery komponenty',
+        en: 'ISO RAG — one system, four components',
+      },
+      description: {
+        pl: 'Cztery repozytoria tworzą jeden spójny system RAG do interpretacji standardów ISO 20022 / ISO 8583. Przepływ: pipeline dokumentów buduje bazy wiedzy, rdzeń MCP + RAG daje agencję i retrieval, ISO Insight to produkcyjny backend, a React UI — front chatowy.',
+        en: 'Four repositories form one coherent RAG system for interpreting ISO 20022 / ISO 8583 standards. The flow: a document pipeline builds the knowledge bases, the MCP + RAG core provides the agents and retrieval, ISO Insight is the production backend, and the React UI is the chat frontend.',
+      },
+    },
+  ],
+
   projects: [
     {
-      title: 'ISO Insight — Document Analyst Copilot',
+      title: 'Document to Markdown Pipeline',
       description: {
-        pl: 'Wieloagentowy asystent AI (read-only) do interpretacji protokołów bankowych (ISO 20022, ISO 8583) — analiza wymagań, wykrywanie luk compliance i śledzenie zmian wersji.',
-        en: 'Multi-agent, read-only AI assistant for interpreting banking protocols (ISO 20022, ISO 8583) — requirement analysis, compliance gap detection and version-change tracking.',
+        pl: 'ETL konwertujący dokumenty biurowe (PDF, DOCX, XLSX, TXT) na Markdown z metadanymi — wejście/wyjście S3/MinIO lub lokalne, karmiący bazy wiedzy systemu RAG.',
+        en: 'ETL converting office documents (PDF, DOCX, XLSX, TXT) into Markdown with metadata — S3/MinIO or local I/O, feeding the knowledge bases of the RAG system.',
       },
       highlights: [
         {
-          pl: 'Wieloagentowy pipeline LangGraph (13 węzłów): orkiestracja, analiza luk, ocena ryzyka, pętla refleksji/krytyka i eskalacja oparta na pewności',
-          en: 'LangGraph multi-agent pipeline (13 nodes): orchestration, gap analysis, risk assessment, reflection/critic loop and confidence-based escalation',
+          pl: 'Rozdzielone etapy load → parser → parse → save, wybór parsera po rozszerzeniu pliku',
+          en: 'Separate load → parser → parse → save stages, parser selected by file extension',
         },
         {
-          pl: 'Asynchroniczne przetwarzanie (Celery + Redis): długie analizy nie blokują i nie przerywają połączenia HTTP (odpowiedź 202 + task_id)',
-          en: 'Asynchronous processing (Celery + Redis): long analyses never block or drop the HTTP connection (202 response + task_id)',
+          pl: 'Profile YAML scalone z plikiem domyślnym + nadpisywanie flagami CLI, walidacja Pydantic na każdym kroku',
+          en: 'YAML profiles merged with a shared default file + CLI flag overrides, Pydantic validation at every step',
         },
         {
-          pl: 'Per-ISO RAG routing: izolowane bazy wiedzy (ISO 20022 / ISO 8583) + integracje MCP (RAG, Jira, Confluence)',
-          en: 'Per-ISO RAG routing: isolated knowledge bases (ISO 20022 / ISO 8583) + MCP integrations (RAG, Jira, Confluence)',
+          pl: 'Strukturalne wyniki błędów zamiast nieobsłużonych wyjątków, pełny log; wyjście Markdown + metadane JSON',
+          en: 'Structured error outcomes instead of unhandled exceptions, full logging; Markdown + JSON metadata output',
         },
         {
-          pl: 'Guardrails anti-PII i prompt-injection (blokada przed enqueue), walidacja dowodów, audit log i śledzenie Langfuse',
-          en: 'PII & prompt-injection guardrails (blocked before enqueue), evidence validation, audit log and Langfuse tracing',
+          pl: 'Docker z instalacją prywatnego CA (root-ca.pem) pod TLS S3/MinIO',
+          en: 'Docker image with private CA (root-ca.pem) installation for S3/MinIO TLS',
         },
       ],
-      tech: ['Python', 'FastAPI', 'LangGraph', 'Celery', 'Redis', 'MCP', 'Langfuse', 'Docker'],
-      url: 'https://github.com/AdamSobieraj/PYTHON_Document_Analyst_Copilot',
+      tech: ['Python', 'Pydantic', 'PyYAML', 'boto3', 'pypdf', 'python-docx', 'openpyxl', 'pandas', 'Docker'],
+      url: 'https://github.com/AdamSobieraj/document-to-markdown-pipeline',
       openSource: true,
+      groupId: 'iso-rag',
     },
     {
       title: 'MCP Agent & RAG System',
@@ -408,6 +424,65 @@ export const cvData: LocalCvContent = {
       tech: ['Python', 'LangChain', 'OpenAI', 'Claude', 'Qdrant', 'FastAPI', 'Docker'],
       url: 'https://github.com/AdamSobieraj/PYTHON-Agent-MCP',
       openSource: true,
+      groupId: 'iso-rag',
+    },
+    {
+      title: 'ISO Insight — Document Analyst Copilot',
+      description: {
+        pl: 'Wieloagentowy asystent AI (read-only) do interpretacji protokołów bankowych (ISO 20022, ISO 8583) — analiza wymagań, wykrywanie luk compliance i śledzenie zmian wersji.',
+        en: 'Multi-agent, read-only AI assistant for interpreting banking protocols (ISO 20022, ISO 8583) — requirement analysis, compliance gap detection and version-change tracking.',
+      },
+      highlights: [
+        {
+          pl: 'Wieloagentowy pipeline LangGraph (13 węzłów): orkiestracja, analiza luk, ocena ryzyka, pętla refleksji/krytyka i eskalacja oparta na pewności',
+          en: 'LangGraph multi-agent pipeline (13 nodes): orchestration, gap analysis, risk assessment, reflection/critic loop and confidence-based escalation',
+        },
+        {
+          pl: 'Asynchroniczne przetwarzanie (Celery + Redis): długie analizy nie blokują i nie przerywają połączenia HTTP (odpowiedź 202 + task_id)',
+          en: 'Asynchronous processing (Celery + Redis): long analyses never block or drop the HTTP connection (202 response + task_id)',
+        },
+        {
+          pl: 'Per-ISO RAG routing: izolowane bazy wiedzy (ISO 20022 / ISO 8583) + integracje MCP (RAG, Jira, Confluence)',
+          en: 'Per-ISO RAG routing: isolated knowledge bases (ISO 20022 / ISO 8583) + MCP integrations (RAG, Jira, Confluence)',
+        },
+        {
+          pl: 'Guardrails anti-PII i prompt-injection (blokada przed enqueue), walidacja dowodów, audit log i śledzenie Langfuse',
+          en: 'PII & prompt-injection guardrails (blocked before enqueue), evidence validation, audit log and Langfuse tracing',
+        },
+      ],
+      tech: ['Python', 'FastAPI', 'LangGraph', 'Celery', 'Redis', 'MCP', 'Langfuse', 'Docker'],
+      url: 'https://github.com/AdamSobieraj/PYTHON_Document_Analyst_Copilot',
+      openSource: true,
+      groupId: 'iso-rag',
+    },
+    {
+      title: 'ISO Insight — React Chat UI',
+      description: {
+        pl: 'Frontend (SPA) systemu ISO Insight — asynchroniczne zapytania do multi-agentowego backendu, odpowiedzi z cytowaniem źródeł i podglądem stanu zadania.',
+        en: 'SPA frontend of the ISO Insight system — asynchronous queries to the multi-agent backend, cited answers and live task-status tracking.',
+      },
+      highlights: [
+        {
+          pl: 'Architektura heksagonalna (ports & adapters): domain i kontrakty niezależne od aplikacji, jedno miejsce składania (bootstrap.ts)',
+          en: 'Hexagonal (ports & adapters) architecture: domain and contracts independent from the app, single wiring point (bootstrap.ts)',
+        },
+        {
+          pl: 'Podgląd cyklu życia zadania (QUEUED → RUNNING → SUCCESS/FAILURE) + status health backendu odświeżany co 30 s',
+          en: 'Live task-lifecycle view (QUEUED → RUNNING → SUCCESS/FAILURE) + backend health status polled every 30 s',
+        },
+        {
+          pl: 'Odpowiedzi Markdown z badge pewności, rozwijanym źródłami i read-only audit logiem; multi-turn z lokalną persistencją',
+          en: 'Markdown answers with a confidence badge, collapsible sources and a read-only audit log; multi-turn with local persistence',
+        },
+        {
+          pl: 'Multi-stage Docker: build Node → nginx z reverse proxy do API (zero CORS)',
+          en: 'Multi-stage Docker: Node build → nginx with reverse proxy to the API (zero CORS)',
+        },
+      ],
+      tech: ['React', 'Vite', 'TypeScript', 'TanStack Query', 'zod', 'Tailwind CSS', 'Docker'],
+      url: 'https://github.com/AdamSobieraj/REACT_RAG_Document_ui',
+      openSource: true,
+      groupId: 'iso-rag',
     },
     {
       title: 'RAG Testing & Evaluation Platform',
@@ -436,21 +511,6 @@ export const cvData: LocalCvContent = {
       tech: ['Python', 'Streamlit', 'Pandas', 'Matplotlib', 'LLM APIs'],
       url: 'https://github.com/AdamSobieraj/PYTHON-leaderboard',
       openSource: true,
-    },
-    {
-      title: 'AI-Powered Banking System (BNP Paribas)',
-      description: {
-        pl: 'System oparty na LLM dla automatyzacji bankowej — RAG, agenci z MCP, semantic search w produkcji.',
-        en: 'LLM-based system for banking automation — RAG, MCP agents, semantic search in production.',
-      },
-      highlights: [
-        { pl: 'RAG pipeline: 10K+ dokumentów, +45% trafności', en: 'RAG pipeline: 10K+ documents, +45% accuracy' },
-        { pl: 'Semantic search (Qdrant): -60% czasu zapytań', en: 'Semantic search (Qdrant): -60% query time' },
-        { pl: 'REST API: 100K+ requestów/dzień, 99.5% uptime', en: 'REST APIs: 100K+ requests/day, 99.5% uptime' },
-        { pl: '-40% czasu rozwiązywania ticketów supportu przez AI', en: '-40% support ticket resolution time via AI' },
-      ],
-      tech: ['Python', 'Java 21', 'Spring Boot 3.x', 'Qdrant', 'PostgreSQL', 'AWS', 'Kafka'],
-      url: '',
     },
   ],
 
