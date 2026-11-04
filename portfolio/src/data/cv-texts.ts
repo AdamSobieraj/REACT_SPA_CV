@@ -357,12 +357,12 @@ export const cvData: LocalCvContent = {
     {
       id: 'iso-rag',
       title: {
-        pl: 'ISO RAG — jeden system, cztery komponenty',
-        en: 'ISO RAG — one system, four components',
+        pl: 'ISO RAG — jeden system, pięć komponentów',
+        en: 'ISO RAG — one system, five components',
       },
       description: {
-        pl: 'Cztery repozytoria tworzą jeden spójny system RAG do interpretacji standardów ISO 20022 / ISO 8583. Przepływ: pipeline dokumentów buduje bazy wiedzy, rdzeń MCP + RAG daje agencję i retrieval, ISO Insight to produkcyjny backend, a React UI — front chatowy.',
-        en: 'Four repositories form one coherent RAG system for interpreting ISO 20022 / ISO 8583 standards. The flow: a document pipeline builds the knowledge bases, the MCP + RAG core provides the agents and retrieval, ISO Insight is the production backend, and the React UI is the chat frontend.',
+        pl: 'Pięć repozytoriów tworzy jeden spójny system RAG do interpretacji standardów ISO 20022 / ISO 8583. Przepływ: pipeline dokumentów buduje bazy wiedzy, rdzeń MCP + RAG daje agencję i retrieval, ISO Insight to produkcyjny backend, React UI — front chatowy, a warstwa Kubernetes wdraża całość w jednym klastrze.',
+        en: 'Five repositories form one coherent RAG system for interpreting ISO 20022 / ISO 8583 standards. The flow: a document pipeline builds the knowledge bases, the MCP + RAG core provides the agents and retrieval, ISO Insight is the production backend, the React UI is the chat frontend, and the Kubernetes layer deploys the whole stack in a single cluster.',
       },
     },
   ],
@@ -481,6 +481,35 @@ export const cvData: LocalCvContent = {
       ],
       tech: ['React', 'Vite', 'TypeScript', 'TanStack Query', 'zod', 'Tailwind CSS', 'Docker'],
       url: 'https://github.com/AdamSobieraj/REACT_RAG_Document_ui',
+      openSource: true,
+      groupId: 'iso-rag',
+    },
+    {
+      title: 'ISO RAG — Kubernetes Infrastructure',
+      description: {
+        pl: 'Warstwa wdrożeniowa systemu ISO Insight — cały stos (UI, backend, workery, agent MCP, Qdrant, MinIO, PostgreSQL, Redis) w jednym klastrze Kubernetes; samo pakowanie i orkiestracja, bez kodu aplikacyjnego.',
+        en: 'Deployment layer of the ISO Insight system — the full stack (UI, backend, workers, MCP agent, Qdrant, MinIO, PostgreSQL, Redis) in one Kubernetes cluster; packaging and orchestration only, no application code.',
+      },
+      highlights: [
+        {
+          pl: 'Kustomize (base + overlays local/prod): manifesty niezależne od środowiska, overlay tylko transformuje — tagi obrazów, Ingress z TLS (cert-manager), HPA, default-deny NetworkPolicy',
+          en: 'Kustomize (base + local/prod overlays): environment-agnostic manifests, overlays only transform — image tags, TLS Ingress (cert-manager), HPA, default-deny NetworkPolicy',
+        },
+        {
+          pl: 'Scaling: HPA dla workerów Celery (1–5) i agenta MCP (1–3); API celowo 1 replika (in-process checkpointer LangGraph), warstwa danych — StatefulSety z PVC',
+          en: 'Scaling: HPA for Celery workers (1–5) and MCP agent (1–3); API pinned to 1 replica (in-process LangGraph checkpointer), data tier as StatefulSets with PVCs',
+        },
+        {
+          pl: 'Joby inicjalizacyjne (bakiety MinIO, DDL Postgres) blokują gotowość zależnych serwisów; readiness API czeka na broker Redis; LLM i Atlassian jako ExternalName Services',
+          en: 'Init Jobs (MinIO buckets, Postgres DDL) gate dependent services’ readiness; API readiness waits on the Redis broker; LLM and Atlassian as ExternalName Services',
+        },
+        {
+          pl: 'Sekrety gitignorowane (*.secrets.env, wersjonowane tylko szablony .example) aplikowane jako k8s Secrets; ResourceQuota + LimitRange + PDB; Makefile: build / secrets / deploy-local / up / destroy',
+          en: 'Gitignored secrets (*.secrets.env, only .example templates tracked) applied as k8s Secrets; ResourceQuota + LimitRange + PDBs; Makefile: build / secrets / deploy-local / up / destroy',
+        },
+      ],
+      tech: ['Kubernetes', 'Kustomize', 'Docker', 'cert-manager', 'Qdrant', 'MinIO', 'PostgreSQL', 'Redis', 'kubectl', 'GNU Make'],
+      url: 'https://github.com/AdamSobieraj/INFRA-RAG-kubernetes',
       openSource: true,
       groupId: 'iso-rag',
     },
